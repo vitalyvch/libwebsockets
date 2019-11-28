@@ -943,9 +943,9 @@ set(HDR_PRIVATE
 	lib/core/private.h)
 
 set(HDR_PUBLIC
-	"${PROJECT_SOURCE_DIR}/include/libwebsockets.h"
+	"${PROJECT_SOURCE_DIR}/include/libwebsockets3.h"
 	"${PROJECT_BINARY_DIR}/lws3_config.h"
-	"${PROJECT_SOURCE_DIR}/plugins/ssh-base/include/lws-plugin-ssh.h"
+	"${PROJECT_SOURCE_DIR}/plugins/ssh-base/include/lws3-plugin-ssh.h"
 	)
 
 set(SOURCES
