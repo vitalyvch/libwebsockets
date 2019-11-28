@@ -1,17 +1,17 @@
 Source: libwebsockets
 Section: libs
 Priority: optional
-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
-Uploaders: Peter Pentchev <roam@ringlet.net>
+Maintainer: Vitalii Chernookyi (Vitalian) <vitaly.v.ch@gmail.com>
+Uploaders: Vitalii Chernookyi (Vitalian) <vitaly.v.ch@gmail.com>
 Build-Depends: debhelper (>> 9~), cmake, libcap-dev, libev-dev, libssl-dev, libuv1-dev,
 	openssl, zlib1g-dev
-Standards-Version: 4.4.1
+Standards-Version: 3.9.7
 Homepage: https://libwebsockets.org/
 #Vcs-Git: https://anonscm.debian.org/git/collab-maint/libwebsockets.git -b debian-v2.4-stable
 #Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/libwebsockets.git/log/?h=debian-v2.4-stable
 #Rules-Requires-Root: no
 
-Package: libwebsockets15
+Package: libwebsockets3
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -22,11 +22,11 @@ Description: lightweight C websockets library
  .
  This package contains the shared library.
 
-Package: libwebsockets-dev
+Package: libwebsockets3-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libwebsockets15 (= ${binary:Version}), libev-dev, libssl-dev,
+Depends: libwebsockets3 (= ${binary:Version}), libev-dev, libssl-dev,
 	libuv1-dev, zlib1g-dev, libcap-dev, ${misc:Depends}
 Description: lightweight C websockets library - development files
  Libwebsockets is a lightweight pure C library for both websockets
@@ -34,14 +34,14 @@ Description: lightweight C websockets library - development files
  and provide fast throughput in both directions.
  .
  This package contains the header files needed for developing programs
- using libwebsockets and a static library.
+ using libwebsockets3 and a static library.
 
-Package: libwebsockets-test-server
+Package: libwebsockets3-test-server
 Section: utils
 Architecture: any
 Multi-Arch: foreign
-Depends: libwebsockets15 (= ${binary:Version}),
-	libwebsockets-test-server-common (= ${source:Version}),
+Depends: libwebsockets3 (= ${binary:Version}),
+	libwebsockets3-test-server-common (= ${source:Version}),
 	${shlibs:Depends}, ${misc:Depends}
 Description: lightweight C websockets library - test servers
  Libwebsockets is a lightweight pure C library for both websockets
@@ -50,12 +50,12 @@ Description: lightweight C websockets library - test servers
  .
  This package contains several demonstration test servers.
 
-Package: libwebsockets-test-server-common
+Package: libwebsockets3-test-server-common
 Section: utils
 Architecture: all
 Multi-Arch: foreign
-Breaks: libwebsockets-test-server (<< 1.6.0-1)
-Replaces: libwebsockets-test-server (<< 1.6.0-1)
+Breaks: libwebsockets3-test-server (<< 1.6.0-1)
+Replaces: libwebsockets3-test-server (<< 1.6.0-1)
 Depends: ${misc:Depends}
 Description: lightweight C websockets library - test servers data
  Libwebsockets is a lightweight pure C library for both websockets
