@@ -1,6 +1,6 @@
-libwebsockets3 (3.2.0-1) experimental; urgency=medium
+libwebsockets3 (3.2.0-1) xenial; urgency=medium
 
-  * Library transition from libwebsockets12 to libwebsockets3 .
+  * Library transition from libwebsockets15 to libwebsockets3 .
   * Update library symbols for this release.
   * Update Standards-Version to 3.9.7 .
 

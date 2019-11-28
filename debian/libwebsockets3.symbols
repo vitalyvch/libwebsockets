@@ -1,4 +1,4 @@
-libwebsockets.so.15 libwebsockets15 #MINVER#
+libwebsockets3.so.2 libwebsockets3 #MINVER#
  _lws_log@Base 1.2
  _lws_logv@Base 1.4
  _lws_plat_file_close@Base 2.4.1
