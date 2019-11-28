@@ -2517,7 +2517,7 @@ configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfigVersion.cmake.in
 # Installation.
 #
 
-install(DIRECTORY include/libwebsockets
+install(DIRECTORY include/libwebsockets3
 	DESTINATION "${LWS_INSTALL_INCLUDE_DIR}" COMPONENT dev_headers)
 
 # Install libs and headers.
