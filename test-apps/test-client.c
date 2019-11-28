@@ -18,7 +18,7 @@
  * Public Domain.
  */
 
-#include "lws_config.h"
+#include "lws3_config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
