@@ -19,8 +19,8 @@
  *  MA  02110-1301  USA
  */
 
-#include "lws_config.h"
-#include "lws_config_private.h"
+#include "lws3_config.h"
+#include "lws3_config_private.h"
 
 #if defined(LWS_WITH_CGI) && defined(LWS_HAVE_VFORK) && \
     !defined(NO_GNU_SOURCE_THIS_TIME)
