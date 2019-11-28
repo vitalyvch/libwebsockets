@@ -57,5 +57,5 @@ lws_abs_transport_get_by_name(const char *name);
  * bring in public api pieces from transports
  */
 
-#include <libwebsockets/abstract/transports/raw-skt.h>
-#include <libwebsockets/abstract/transports/unit-test.h>
+#include <libwebsockets3/abstract/transports/raw-skt.h>
+#include <libwebsockets3/abstract/transports/unit-test.h>

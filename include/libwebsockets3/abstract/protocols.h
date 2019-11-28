@@ -50,4 +50,4 @@ lws_abs_protocol_get_by_name(const char *name);
  * bring in public api pieces from protocols
  */
 
-#include <libwebsockets/abstract/protocols/smtp.h>
+#include <libwebsockets3/abstract/protocols/smtp.h>

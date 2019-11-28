@@ -304,7 +304,7 @@ lws_pthread_mutex_unlock(pthread_mutex_t *lock)
 #define CONTEXT_PORT_NO_LISTEN -1
 #define CONTEXT_PORT_NO_LISTEN_SERVER -2
 
-#include <libwebsockets/lws-logs.h>
+#include <libwebsockets3/lws-logs.h>
 
 
 #include <stddef.h>
@@ -350,7 +350,7 @@ struct lws_pollfd {
 
 
 #if defined(LWS_WITH_ESP32)
-#include <libwebsockets/lws-esp32.h>
+#include <libwebsockets3/lws-esp32.h>
 #else
 typedef int lws_sockfd_type;
 typedef int lws_filefd_type;
@@ -379,7 +379,7 @@ typedef unsigned short sa_family_t;
 typedef unsigned short in_port_t;
 typedef uint32_t socklen_t;
 
-#include <libwebsockets/lws-optee.h>
+#include <libwebsockets3/lws-optee.h>
 
 #if !defined(TEE_SE_READER_NAME_MAX)
            struct addrinfo {
@@ -523,45 +523,45 @@ struct lws_tokens;
 struct lws_vhost;
 struct lws;
 
-#include <libwebsockets/lws-system.h>
-#include <libwebsockets/lws-ws-close.h>
-#include <libwebsockets/lws-callbacks.h>
-#include <libwebsockets/lws-ws-state.h>
-#include <libwebsockets/lws-ws-ext.h>
-#include <libwebsockets/lws-protocols-plugins.h>
-#include <libwebsockets/lws-plugin-generic-sessions.h>
-#include <libwebsockets/lws-context-vhost.h>
-#include <libwebsockets/lws-client.h>
-#include <libwebsockets/lws-http.h>
-#include <libwebsockets/lws-spa.h>
-#include <libwebsockets/lws-purify.h>
-#include <libwebsockets/lws-misc.h>
-#include <libwebsockets/lws-dsh.h>
-#include <libwebsockets/lws-timeout-timer.h>
-#include <libwebsockets/lws-service.h>
-#include <libwebsockets/lws-write.h>
-#include <libwebsockets/lws-writeable.h>
-#include <libwebsockets/lws-adopt.h>
-#include <libwebsockets/lws-network-helper.h>
-#include <libwebsockets/lws-ring.h>
-#include <libwebsockets/lws-sha1-base64.h>
-#include <libwebsockets/lws-x509.h>
-#include <libwebsockets/lws-cgi.h>
-#include <libwebsockets/lws-vfs.h>
-#include <libwebsockets/lws-lejp.h>
-#include <libwebsockets/lws-stats.h>
-#include <libwebsockets/lws-struct.h>
-#include <libwebsockets/lws-threadpool.h>
-#include <libwebsockets/lws-tokenize.h>
-#include <libwebsockets/lws-lwsac.h>
-#include <libwebsockets/lws-fts.h>
-#include <libwebsockets/lws-diskcache.h>
-#include <libwebsockets/lws-retry.h>
-#include <libwebsockets/lws-sequencer.h>
+#include <libwebsockets3/lws-system.h>
+#include <libwebsockets3/lws-ws-close.h>
+#include <libwebsockets3/lws-callbacks.h>
+#include <libwebsockets3/lws-ws-state.h>
+#include <libwebsockets3/lws-ws-ext.h>
+#include <libwebsockets3/lws-protocols-plugins.h>
+#include <libwebsockets3/lws-plugin-generic-sessions.h>
+#include <libwebsockets3/lws-context-vhost.h>
+#include <libwebsockets3/lws-client.h>
+#include <libwebsockets3/lws-http.h>
+#include <libwebsockets3/lws-spa.h>
+#include <libwebsockets3/lws-purify.h>
+#include <libwebsockets3/lws-misc.h>
+#include <libwebsockets3/lws-dsh.h>
+#include <libwebsockets3/lws-timeout-timer.h>
+#include <libwebsockets3/lws-service.h>
+#include <libwebsockets3/lws-write.h>
+#include <libwebsockets3/lws-writeable.h>
+#include <libwebsockets3/lws-adopt.h>
+#include <libwebsockets3/lws-network-helper.h>
+#include <libwebsockets3/lws-ring.h>
+#include <libwebsockets3/lws-sha1-base64.h>
+#include <libwebsockets3/lws-x509.h>
+#include <libwebsockets3/lws-cgi.h>
+#include <libwebsockets3/lws-vfs.h>
+#include <libwebsockets3/lws-lejp.h>
+#include <libwebsockets3/lws-stats.h>
+#include <libwebsockets3/lws-struct.h>
+#include <libwebsockets3/lws-threadpool.h>
+#include <libwebsockets3/lws-tokenize.h>
+#include <libwebsockets3/lws-lwsac.h>
+#include <libwebsockets3/lws-fts.h>
+#include <libwebsockets3/lws-diskcache.h>
+#include <libwebsockets3/lws-retry.h>
+#include <libwebsockets3/lws-sequencer.h>
 
-#include <libwebsockets/abstract/abstract.h>
+#include <libwebsockets3/abstract/abstract.h>
 
-#include <libwebsockets/lws-test-sequencer.h>
+#include <libwebsockets3/lws-test-sequencer.h>
 
 #if defined(LWS_WITH_TLS)
 
@@ -572,16 +572,16 @@ struct lws;
 #include <mbedtls/sha512.h>
 #endif
 
-#include <libwebsockets/lws-gencrypto.h>
-#include <libwebsockets/lws-genhash.h>
-#include <libwebsockets/lws-genrsa.h>
-#include <libwebsockets/lws-genaes.h>
-#include <libwebsockets/lws-genec.h>
+#include <libwebsockets3/lws-gencrypto.h>
+#include <libwebsockets3/lws-genhash.h>
+#include <libwebsockets3/lws-genrsa.h>
+#include <libwebsockets3/lws-genaes.h>
+#include <libwebsockets3/lws-genec.h>
 
-#include <libwebsockets/lws-jwk.h>
-#include <libwebsockets/lws-jose.h>
-#include <libwebsockets/lws-jws.h>
-#include <libwebsockets/lws-jwe.h>
+#include <libwebsockets3/lws-jwk.h>
+#include <libwebsockets3/lws-jose.h>
+#include <libwebsockets3/lws-jws.h>
+#include <libwebsockets3/lws-jwe.h>
 
 #endif
 

@@ -119,5 +119,5 @@ lws_abs_destroy_instance(lws_abs_t **ai);
  * bring in all the protocols and transports definitions
  */
 
-#include <libwebsockets/abstract/protocols.h>
-#include <libwebsockets/abstract/transports.h>
+#include <libwebsockets3/abstract/protocols.h>
+#include <libwebsockets3/abstract/transports.h>
