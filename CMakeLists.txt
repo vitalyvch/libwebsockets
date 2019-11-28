@@ -2483,7 +2483,7 @@ set(LWS__INCLUDE_DIRS
     "${PROJECT_SOURCE_DIR}/lib"
     "${PROJECT_BINARY_DIR}")
 set(LIBWEBSOCKETS_INCLUDE_DIRS ${LWS__INCLUDE_DIRS} CACHE PATH "Libwebsockets3 include directories")
-configure_file(${PROJECT_SOURCE_DIR}/cmake/Libwebsockets3Config.cmake.in
+configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfig.cmake.in
                 ${PROJECT_BINARY_DIR}/Libwebsockets3Config.cmake 
                 @ONLY)
 
@@ -2502,12 +2502,12 @@ file(RELATIVE_PATH
 set(LWS__INCLUDE_DIRS 
     "\${LWS_CMAKE_DIR}/${REL_INCLUDE_DIR}") 
 configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfig.cmake.in
-                ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/LibwebsocketsConfig.cmake 
+                ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/Libwebsockets3Config.cmake 
                 @ONLY)
 
 # Generate version info for both build-tree and install-tree.
 configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfigVersion.cmake.in
-                ${PROJECT_BINARY_DIR}/LibwebsocketsConfigVersion.cmake 
+                ${PROJECT_BINARY_DIR}/Libwebsockets3ConfigVersion.cmake 
                 @ONLY)
 
 			set_target_properties(${LWS_LIBRARIES}
