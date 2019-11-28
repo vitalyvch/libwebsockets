@@ -1,4 +1,4 @@
-Source: libwebsockets
+Source: libwebsockets3
 Section: libs
 Priority: optional
 Maintainer: Vitalii Chernookyi (Vitalian) <vitaly.v.ch@gmail.com>
