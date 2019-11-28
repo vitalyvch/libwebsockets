@@ -2482,7 +2482,7 @@ export(PACKAGE libwebsockets3)
 set(LWS__INCLUDE_DIRS 
     "${PROJECT_SOURCE_DIR}/lib"
     "${PROJECT_BINARY_DIR}")
-set(LIBWEBSOCKETS_INCLUDE_DIRS ${LWS__INCLUDE_DIRS} CACHE PATH "Libwebsockets3 include directories")
+set(LIBWEBSOCKETS3_INCLUDE_DIRS ${LWS__INCLUDE_DIRS} CACHE PATH "Libwebsockets3 include directories")
 configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfig.cmake.in
                 ${PROJECT_BINARY_DIR}/Libwebsockets3Config.cmake 
                 @ONLY)
@@ -2522,7 +2522,7 @@ install(DIRECTORY include/libwebsockets3
 
 # Install libs and headers.
 install(TARGETS ${LWS_LIBRARIES}
-		EXPORT LibwebsocketsTargets
+		EXPORT Libwebsockets3Targets
 		LIBRARY DESTINATION "${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}" COMPONENT libraries
 		ARCHIVE DESTINATION "${LWS_INSTALL_LIB_DIR}${LIB_SUFFIX}" COMPONENT libraries
 		RUNTIME DESTINATION "${LWS_INSTALL_BIN_DIR}" COMPONENT libraries # Windows DLLs
@@ -2632,7 +2632,7 @@ install(FILES
 
 # Install exports for the install-tree.
 if (LWS_WITH_EXPORT_LWSTARGETS)
-    install(EXPORT LibwebsocketsTargets
+    install(EXPORT Libwebsockets3Targets
             DESTINATION "${LWS_INSTALL_CMAKE_DIR}" COMPONENT dev)
 endif()
 
@@ -2716,12 +2716,12 @@ message(" LWS3_WITH_ABSTRACT = ${LWS_WITH_ABSTRACT}")
 message("---------------------------------------------------------------------")
 
 # These will be available to parent projects including libwebsockets using add_subdirectory()
-set(LIBWEBSOCKETS_LIBRARIES ${LWS_LIBRARIES} CACHE STRING "Libwebsocket3 libraries")
+set(LIBWEBSOCKETS3_LIBRARIES ${LWS_LIBRARIES} CACHE STRING "Libwebsocket3 libraries")
 if (LWS_WITH_STATIC)
-	set(LIBWEBSOCKETS_LIBRARIES_STATIC websockets3 CACHE STRING "Libwebsocket3 static library")
+	set(LIBWEBSOCKETS3_LIBRARIES_STATIC websockets3 CACHE STRING "Libwebsocket3 static library")
 endif()
 if (LWS_WITH_SHARED)
-	set(LIBWEBSOCKETS_LIBRARIES_SHARED websockets3_shared CACHE STRING "Libwebsocket3 shared library")
+	set(LIBWEBSOCKETS3_LIBRARIES_SHARED websockets3_shared CACHE STRING "Libwebsocket3 shared library")
 endif()
 
 if (LWS_WITH_MINIMAL_EXAMPLES)
