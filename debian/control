@@ -3,13 +3,13 @@ Section: libs
 Priority: optional
 Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Uploaders: Peter Pentchev <roam@ringlet.net>
-Build-Depends: debhelper (>> 11~), cmake, libcap-dev, libev-dev, libssl-dev, libuv1-dev,
+Build-Depends: debhelper (>> 9~), cmake, libcap-dev, libev-dev, libssl-dev, libuv1-dev,
 	openssl, zlib1g-dev
 Standards-Version: 4.4.1
 Homepage: https://libwebsockets.org/
 #Vcs-Git: https://anonscm.debian.org/git/collab-maint/libwebsockets.git -b debian-v2.4-stable
 #Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/libwebsockets.git/log/?h=debian-v2.4-stable
-Rules-Requires-Root: no
+#Rules-Requires-Root: no
 
 Package: libwebsockets15
 Architecture: any

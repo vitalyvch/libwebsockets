@@ -12,7 +12,7 @@ Homepage: https://libwebsockets.org/
 Standards-Version: 4.4.1
 Testsuite: autopkgtest
 Testsuite-Triggers: build-essential, libanyevent-perl, libpath-tiny-perl, libtest-command-perl, perl, pkg-config
-Build-Depends: debhelper (>> 11~), cmake, libcap-dev, libev-dev, libssl-dev, libuv1-dev, openssl, zlib1g-dev
+Build-Depends: debhelper (>> 9~), cmake, libcap-dev, libev-dev, libssl-dev, libuv1-dev, openssl, zlib1g-dev
 Package-List:
  libwebsockets-dev deb libdevel optional arch=any
  libwebsockets-test-server deb utils optional arch=any
