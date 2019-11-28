@@ -105,10 +105,10 @@ option(LWS_WITH_STRUCT_SQLITE3 "Generic struct serialization to and from SQLITE3
 option(LWS_WITH_SMTP "Provide SMTP support" OFF)
 if (WIN32 OR LWS_WITH_ESP32)
 option(LWS_WITH_DIR "Directory scanning api support" OFF)
-option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lwsws" OFF)
+option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lws3ws" OFF)
 else()
 option(LWS_WITH_DIR "Directory scanning api support" ON)
-option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lwsws" ON)
+option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lws3ws" ON)
 endif()
 option(LWS_WITH_NO_LOGS "Disable all logging from being compiled in" OFF)
 option(LWS_AVOID_SIGPIPE_IGN "Android 7+ reportedly needs this" OFF)
@@ -125,7 +125,7 @@ option(LWS_WITH_CUSTOM_HEADERS "Store and allow querying custom HTTP headers (H1
 option(LWS_WITH_DISKCACHE "Hashed cache directory with lazy LRU deletion to size limit" OFF)
 option(LWS_WITH_ASAN "Build with gcc runtime sanitizer options enabled (needs libasan)" OFF)
 option(LWS_WITH_DIR "Directory scanning api support" OFF)
-option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lwsws" OFF)
+option(LWS_WITH_LEJP_CONF "With LEJP configuration parser as used by lws3ws" OFF)
 option(LWS_WITH_ZLIB "Include zlib support (required for extensions)" OFF)
 option(LWS_WITH_BUNDLED_ZLIB "Use bundled zlib version (Windows only)" ${LWS_WITH_BUNDLED_ZLIB_DEFAULT})
 option(LWS_WITH_MINIZ "Use miniz instead of zlib" OFF)
@@ -250,9 +250,9 @@ if (LWS_WITH_ESP32)
 	set(LWS_WITH_FTS 0)
 endif()
 
-project(libwebsockets C)
+project(libwebsockets3 C)
 
-set(PACKAGE "libwebsockets")
+set(PACKAGE "libwebsockets3")
 set(CPACK_PACKAGE_NAME "${PACKAGE}")
 set(CPACK_PACKAGE_VERSION_MAJOR "3")
 set(CPACK_PACKAGE_VERSION_MINOR "2")
@@ -944,7 +944,7 @@ set(HDR_PRIVATE
 
 set(HDR_PUBLIC
 	"${PROJECT_SOURCE_DIR}/include/libwebsockets.h"
-	"${PROJECT_BINARY_DIR}/lws_config.h"
+	"${PROJECT_BINARY_DIR}/lws3_config.h"
 	"${PROJECT_SOURCE_DIR}/plugins/ssh-base/include/lws-plugin-ssh.h"
 	)
 
@@ -1523,82 +1523,82 @@ if (LWS_WITH_STATIC)
     if (LWS_STATIC_PIC)
         set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     endif()
-	add_library(websockets STATIC
+	add_library(websockets3 STATIC
 				${HDR_PRIVATE}
 				${HDR_PUBLIC}
 				${SOURCES})
-	list(APPEND LWS_LIBRARIES websockets)
+	list(APPEND LWS_LIBRARIES websockets3)
 
 	if (WIN32)
 		# Windows uses the same .lib ending for static libraries and shared
 		# library linker files, so rename the static library.
-		set_target_properties(websockets
+		set_target_properties(websockets3
 			PROPERTIES
-			OUTPUT_NAME websockets_static)
+			OUTPUT_NAME websockets3_static)
 	endif()
 	add_custom_command(
-		      TARGET websockets
+		      TARGET websockets3
 		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets.h
-		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets.h
+		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3.h
 	)
 
 	add_custom_command(
-		      TARGET websockets
+		      TARGET websockets3
 		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets/
-									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets
+									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3
 	)
 
 	add_custom_command(
-		      TARGET websockets
-		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/lws_config.h
-		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/lws_config.h
+		      TARGET websockets3
+		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/lws3_config.h
+		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/lws3_config.h
 	)
 
 endif()
 
 if (LWS_WITH_SHARED)
-	add_library(websockets_shared SHARED
+	add_library(websockets3_shared SHARED
 				${HDR_PRIVATE}
 				${HDR_PUBLIC}
 				${SOURCES}
 				${RESOURCES})
-	list(APPEND LWS_LIBRARIES websockets_shared)
+	list(APPEND LWS_LIBRARIES websockets3_shared)
 
-	# We want the shared lib to be named "libwebsockets"
+	# We want the shared lib to be named "libwebsockets3"
 	# not "libwebsocket_shared".
-	set_target_properties(websockets_shared
+	set_target_properties(websockets3_shared
 		PROPERTIES
-		OUTPUT_NAME websockets)
+		OUTPUT_NAME websockets3)
 
 	if (WIN32)
 		# Compile as DLL (export function declarations)
 		set_property(
-			TARGET websockets_shared
+			TARGET websockets3_shared
 			PROPERTY COMPILE_DEFINITIONS
 			LWS_DLL
 			LWS_INTERNAL)
 	endif()
 
 	if (APPLE)
-		set_property(TARGET websockets_shared PROPERTY MACOSX_RPATH YES)
+		set_property(TARGET websockets3_shared PROPERTY MACOSX_RPATH YES)
 	endif()
 
 	add_custom_command(
-		      TARGET websockets_shared
+		      TARGET websockets3_shared
 		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets.h
-		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets.h
+		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3.h
 	)
 
 	add_custom_command(
-		      TARGET websockets
+		      TARGET websockets3
 		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets
-									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets
+									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3
 	)
 
 	add_custom_command(
-		      TARGET websockets_shared
-		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/lws_config.h
-		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/lws_config.h
+		      TARGET websockets3_shared
+		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/lws3_config.h
+		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/lws3_config.h
 	)
 
 
@@ -1924,15 +1924,15 @@ CHECK_C_SOURCE_COMPILES("#define _GNU_SOURCE\n#include <unistd.h>\nint main(void
 CHECK_C_SOURCE_COMPILES("#include <netinet/tcp.h>\nint main(void) { return TCP_USER_TIMEOUT; }\n" LWS_HAVE_TCP_USER_TIMEOUT)
 
 set(CMAKE_REQUIRED_LIBRARIES ${temp})
-# Generate the lws_config.h that includes all the public compilation settings.
+# Generate the lws3_config.h that includes all the public compilation settings.
 configure_file(
        "${PROJECT_SOURCE_DIR}/cmake/lws_config.h.in"
-       "${PROJECT_BINARY_DIR}/lws_config.h")
+       "${PROJECT_BINARY_DIR}/lws3_config.h")
 
-# Generate the lws_config.h that includes all the private compilation settings.
+# Generate the lws3_config.h that includes all the private compilation settings.
 configure_file(
        "${PROJECT_SOURCE_DIR}/cmake/lws_config_private.h.in"
-       "${PROJECT_BINARY_DIR}/lws_config_private.h")
+       "${PROJECT_BINARY_DIR}/lws3_config_private.h")
 
 # Generate self-signed SSL certs for the test-server.
 
@@ -2077,14 +2077,14 @@ if ((LWS_ROLE_H1 OR LWS_ROLE_H2) AND NOT LWS_WITHOUT_TESTAPPS)
 			if (NOT LWS_WITH_SHARED)
 				message(FATAL_ERROR "Build of the shared library is disabled. LWS_LINK_TESTAPPS_DYNAMIC must be combined with LWS_WITH_SHARED.")
 			endif()
-			target_link_libraries(${TEST_NAME} websockets_shared)
-			add_dependencies(${TEST_NAME} websockets_shared)
+			target_link_libraries(${TEST_NAME} websockets3_shared)
+			add_dependencies(${TEST_NAME} websockets3_shared)
 		else()
 			if (NOT LWS_WITH_STATIC)
 				message(FATAL_ERROR "Build of the static library is disabled. Disabled LWS_LINK_TESTAPPS_DYNAMIC must be combined with LWS_WITH_STATIC.")
 			endif()
-			target_link_libraries(${TEST_NAME} websockets)
-			add_dependencies(${TEST_NAME} websockets)
+			target_link_libraries(${TEST_NAME} websockets3)
+			add_dependencies(${TEST_NAME} websockets3)
 			if (UNIX AND LWS_WITH_SSL AND NOT LWS_WITH_MBEDTLS)
 				target_link_libraries(${TEST_NAME} dl)
 			endif()
@@ -2100,10 +2100,10 @@ if ((LWS_ROLE_H1 OR LWS_ROLE_H2) AND NOT LWS_WITHOUT_TESTAPPS)
 						INSTALL_DATADIR="${CMAKE_INSTALL_PREFIX}/share"
 					)
 
-		# Prefix the binary names with libwebsockets.
+		# Prefix the binary names with libwebsockets3.
 		set_target_properties(${TEST_NAME}
 			PROPERTIES
-			OUTPUT_NAME libwebsockets-${TEST_NAME})
+			OUTPUT_NAME libwebsockets3-${TEST_NAME})
 
 		# Add to the list of tests.
 		list(APPEND TEST_APP_LIST ${TEST_NAME})
@@ -2112,7 +2112,7 @@ if ((LWS_ROLE_H1 OR LWS_ROLE_H2) AND NOT LWS_WITHOUT_TESTAPPS)
 	if (UNIX AND LWS_WITH_PLUGINS)
 		set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS}")
 		if(NOT((${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD") OR (${CMAKE_SYSTEM_NAME} MATCHES "QNX")))
-			target_link_libraries(websockets dl)
+			target_link_libraries(websockets3 dl)
 		endif()
 	endif()
 
@@ -2247,8 +2247,8 @@ if ((LWS_ROLE_H1 OR LWS_ROLE_H2) AND NOT LWS_WITHOUT_TESTAPPS)
 		source_group("Sources"   FILES ${PLUGIN_SRCS})
 		add_library(${PLUGIN_NAME} SHARED ${PLUGIN_SRCS} ${PLUGIN_HDR})
 		
-		target_link_libraries(${PLUGIN_NAME} websockets_shared)
-		add_dependencies(${PLUGIN_NAME} websockets_shared)
+		target_link_libraries(${PLUGIN_NAME} websockets3_shared)
+		add_dependencies(${PLUGIN_NAME} websockets3_shared)
 		include_directories(${PLUGIN_INCLUDE})
 
 		# Set test app specific defines.
@@ -2386,7 +2386,7 @@ endif((LWS_ROLE_H1 OR LWS_ROLE_H2) AND NOT LWS_WITHOUT_TESTAPPS)
 
 if (LWS_WITH_LWSWS)
 		list(APPEND LWSWS_SRCS
-			"lwsws/main.c"
+			"lws3ws/main.c"
 		)
 
 		if (WIN32)
@@ -2404,13 +2404,13 @@ if (LWS_WITH_LWSWS)
 
 		source_group("Headers Private"   FILES ${LWSWS_HDR})
 		source_group("Sources"   FILES ${LWSWS_SRCS})
-		add_executable("lwsws" ${LWSWS_SRCS} ${LWSWS_HDR})
+		add_executable("lws3ws" ${LWSWS_SRCS} ${LWSWS_HDR})
 
-		target_link_libraries("lwsws" websockets_shared)
-		add_dependencies("lwsws" websockets_shared)
+		target_link_libraries("lws3ws" websockets3_shared)
+		add_dependencies("lws3ws" websockets3_shared)
 
 		# Set test app specific defines.
-		set_property(TARGET "lwsws"
+		set_property(TARGET "lws3ws"
 			     PROPERTY COMPILE_DEFINITIONS
 			     INSTALL_DATADIR="${CMAKE_INSTALL_PREFIX}/share"
 		)
@@ -2420,39 +2420,39 @@ if (UNIX)
 
 # Generate and install pkgconfig.
 # (This is not indented, because the tabs will be part of the output)
-file(WRITE "${PROJECT_BINARY_DIR}/libwebsockets.pc"
+file(WRITE "${PROJECT_BINARY_DIR}/libwebsockets3.pc"
 "prefix=\"${CMAKE_INSTALL_PREFIX}\"
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib${LIB_SUFFIX}
 includedir=\${prefix}/include
 
-Name: libwebsockets
+Name: libwebsockets3
 Description: Websockets server and client library
 Version: ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}
 
-Libs: -L\${libdir} -lwebsockets
+Libs: -L\${libdir} -lwebsockets3
 Cflags: -I\${includedir}"
 )
 
-	install(FILES "${PROJECT_BINARY_DIR}/libwebsockets.pc"
+	install(FILES "${PROJECT_BINARY_DIR}/libwebsockets3.pc"
 		DESTINATION lib${LIB_SUFFIX}/pkgconfig)
 
-file(WRITE "${PROJECT_BINARY_DIR}/libwebsockets_static.pc"
+file(WRITE "${PROJECT_BINARY_DIR}/libwebsockets3_static.pc"
 "prefix=\"${CMAKE_INSTALL_PREFIX}\"
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib${LIB_SUFFIX}
 includedir=\${prefix}/include
 
-Name: libwebsockets_static
+Name: libwebsockets3_static
 Description: Websockets server and client static library
 Version: ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}
 
-Libs: -L\${libdir} -lwebsockets_static
+Libs: -L\${libdir} -lwebsockets3_static
 Libs.private:
 Cflags: -I\${includedir}"
 )
 
-	install(FILES "${PROJECT_BINARY_DIR}/libwebsockets_static.pc"
+	install(FILES "${PROJECT_BINARY_DIR}/libwebsockets3_static.pc"
 		DESTINATION lib${LIB_SUFFIX}/pkgconfig)
 
 
@@ -2465,7 +2465,7 @@ endif(UNIX)
 if(WIN32 AND NOT CYGWIN)
   set(DEF_INSTALL_CMAKE_DIR cmake)
 else()
-  set(DEF_INSTALL_CMAKE_DIR lib${LIB_SUFFIX}/cmake/libwebsockets)
+  set(DEF_INSTALL_CMAKE_DIR lib${LIB_SUFFIX}/cmake/libwebsockets3)
 endif()
 
 set(LWS_INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
@@ -2473,18 +2473,18 @@ set(LWS_INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation dire
 # Export targets (This is used for other CMake projects to easily find the libraries and include files).
 if (LWS_WITH_EXPORT_LWSTARGETS)
     export(TARGETS ${LWS_LIBRARIES}
-            FILE "${PROJECT_BINARY_DIR}/LibwebsocketsTargets.cmake")
+            FILE "${PROJECT_BINARY_DIR}/Libwebsockets3Targets.cmake")
 endif()
 
-export(PACKAGE libwebsockets)
+export(PACKAGE libwebsockets3)
 
 # Generate the config file for the build-tree.
 set(LWS__INCLUDE_DIRS 
     "${PROJECT_SOURCE_DIR}/lib"
     "${PROJECT_BINARY_DIR}")
-set(LIBWEBSOCKETS_INCLUDE_DIRS ${LWS__INCLUDE_DIRS} CACHE PATH "Libwebsockets include directories")
-configure_file(${PROJECT_SOURCE_DIR}/cmake/LibwebsocketsConfig.cmake.in
-                ${PROJECT_BINARY_DIR}/LibwebsocketsConfig.cmake 
+set(LIBWEBSOCKETS_INCLUDE_DIRS ${LWS__INCLUDE_DIRS} CACHE PATH "Libwebsockets3 include directories")
+configure_file(${PROJECT_SOURCE_DIR}/cmake/Libwebsockets3Config.cmake.in
+                ${PROJECT_BINARY_DIR}/Libwebsockets3Config.cmake 
                 @ONLY)
 
 # Generate the config file for the installation tree.
@@ -2539,26 +2539,26 @@ if (NOT LWS_WITHOUT_TESTAPPS)
 	set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Example files")
 endif()
 
-# lwsws
+# lws3ws
 if (LWS_WITH_LWSWS)
-	install(TARGETS lwsws
-		RUNTIME DESTINATION "${LWS_INSTALL_BIN_DIR}" COMPONENT lwsws )
+	install(TARGETS lws3ws
+		RUNTIME DESTINATION "${LWS_INSTALL_BIN_DIR}" COMPONENT lws3ws )
 endif()
 
 # Programs shared files used by the test-server.
 if (NOT LWS_WITHOUT_TESTAPPS AND NOT LWS_WITHOUT_SERVER)
 	install(FILES ${TEST_SERVER_DATA}
-			DESTINATION share/libwebsockets-test-server
+			DESTINATION share/libwebsockets3-test-server
 		COMPONENT examples)
 
 		install(FILES "${PROJECT_SOURCE_DIR}/test-apps/private/index.html"
-			DESTINATION share/libwebsockets-test-server/private
+			DESTINATION share/libwebsockets3-test-server/private
 			COMPONENT examples)
 if (LWS_WITH_CGI)
 	set(CGI_TEST_SCRIPT "${PROJECT_SOURCE_DIR}/test-apps/lws-cgi-test.sh")
 	install(FILES ${CGI_TEST_SCRIPT}
 			PERMISSIONS  OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ
-			DESTINATION share/libwebsockets-test-server
+			DESTINATION share/libwebsockets3-test-server
 			COMPONENT examples)
 	endif()
 endif()
@@ -2566,7 +2566,7 @@ endif()
 
 if (NOT LWS_WITHOUT_TEST_SERVER AND NOT LWS_WITHOUT_SERVER AND NOT LWS_WITHOUT_TESTAPPS)
 	install(FILES test-apps/lws-ssh-test-keys;test-apps/lws-ssh-test-keys.pub
-		DESTINATION share/libwebsockets-test-server
+		DESTINATION share/libwebsockets3-test-server
 		COMPONENT examples)
 endif()
 
@@ -2575,19 +2575,19 @@ endif()
 if (LWS_WITH_PLUGINS)
 	install(TARGETS ${PLUGINS_LIST}
 		PERMISSIONS  OWNER_WRITE OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE OWNER_READ GROUP_READ WORLD_READ
-		DESTINATION share/libwebsockets-test-server/plugins
+		DESTINATION share/libwebsockets3-test-server/plugins
 		COMPONENT plugins)
 
 	if (NOT WIN32)
 		install(FILES plugins/deaddrop/assets/index.html;plugins/deaddrop/assets/deaddrop.js;plugins/deaddrop/assets/deaddrop.css;plugins/deaddrop/assets/drop.svg
-			DESTINATION share/libwebsockets-test-server/deaddrop
+			DESTINATION share/libwebsockets3-test-server/deaddrop
 			COMPONENT plugins)
 	endif()
 
 
 if (LWS_WITH_SERVER_STATUS)
-	install(FILES plugins/server-status.html;plugins/server-status.js;plugins/server-status.css;plugins/lwsws-logo.png
-		DESTINATION share/libwebsockets-test-server/server-status
+	install(FILES plugins/server-status.html;plugins/server-status.js;plugins/server-status.css;plugins/lws3ws-logo.png
+		DESTINATION share/libwebsockets3-test-server/server-status
 			COMPONENT examples)
 endif()
 if (LWS_WITH_GENERIC_SESSIONS)
@@ -2606,28 +2606,28 @@ if (LWS_WITH_GENERIC_SESSIONS)
 		      plugins/generic-sessions/assets/post-forgot-ok.html
 		      plugins/generic-sessions/assets/post-forgot-fail.html
 		      plugins/generic-sessions/assets/index.html
-		DESTINATION share/libwebsockets-test-server/generic-sessions
+		DESTINATION share/libwebsockets3-test-server/generic-sessions
 			COMPONENT examples)
 	install(FILES plugins/generic-sessions/assets/successful-login.html 
-		DESTINATION share/libwebsockets-test-server/generic-sessions/needauth
+		DESTINATION share/libwebsockets3-test-server/generic-sessions/needauth
 			COMPONENT examples)
 	install(FILES plugins/generic-sessions/assets/admin-login.html
-		DESTINATION share/libwebsockets-test-server/generic-sessions/needadmin
+		DESTINATION share/libwebsockets3-test-server/generic-sessions/needadmin
 			COMPONENT examples)
 endif()
 
 	install(FILES
 		      plugins/generic-table/assets/lwsgt.js
 		      plugins/generic-table/assets/index.html
-		DESTINATION share/libwebsockets-test-server/generic-table
+		DESTINATION share/libwebsockets3-test-server/generic-table
 			COMPONENT examples)
 
 endif()
 
-# Install the LibwebsocketsConfig.cmake and LibwebsocketsConfigVersion.cmake
+# Install the Libwebsockets3Config.cmake and Libwebsockets3ConfigVersion.cmake
 install(FILES
-               "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/LibwebsocketsConfig.cmake"
-               "${PROJECT_BINARY_DIR}/LibwebsocketsConfigVersion.cmake"
+               "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/Libwebsockets3Config.cmake"
+               "${PROJECT_BINARY_DIR}/Libwebsockets3ConfigVersion.cmake"
                DESTINATION "${LWS_INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 # Install exports for the install-tree.
@@ -2650,78 +2650,78 @@ endif()
 message("---------------------------------------------------------------------")
 message("  Settings:  (For more help do cmake -LH <srcpath>)")
 message("---------------------------------------------------------------------")
-message(" LWS_WITH_STATIC = ${LWS_WITH_STATIC}")
-message(" LWS_WITH_SHARED = ${LWS_WITH_SHARED}")
-message(" LWS_WITH_SSL = ${LWS_WITH_SSL} (SSL Support)")
-message(" LWS_SSL_CLIENT_USE_OS_CA_CERTS = ${LWS_SSL_CLIENT_USE_OS_CA_CERTS}")
-message(" LWS_WITH_WOLFSSL = ${LWS_WITH_WOLFSSL} (wolfSSL/CyaSSL replacement for OpenSSL)")
+message(" LWS3_WITH_STATIC = ${LWS_WITH_STATIC}")
+message(" LWS3_WITH_SHARED = ${LWS_WITH_SHARED}")
+message(" LWS3_WITH_SSL = ${LWS_WITH_SSL} (SSL Support)")
+message(" LWS3_SSL_CLIENT_USE_OS_CA_CERTS = ${LWS_SSL_CLIENT_USE_OS_CA_CERTS}")
+message(" LWS3_WITH_WOLFSSL = ${LWS_WITH_WOLFSSL} (wolfSSL/CyaSSL replacement for OpenSSL)")
 if (LWS_WITH_WOLFSSL)
-	message("   LWS_WOLFSSL_LIBRARIES = ${LWS_WOLFSSL_LIBRARIES}")
-	message("   LWS_WOLFSSL_INCLUDE_DIRS = ${LWS_WOLFSSL_INCLUDE_DIRS}")
+	message("   LWS3_WOLFSSL_LIBRARIES = ${LWS_WOLFSSL_LIBRARIES}")
+	message("   LWS3_WOLFSSL_INCLUDE_DIRS = ${LWS_WOLFSSL_INCLUDE_DIRS}")
 endif()
-message(" LWS_WITH_MBEDTLS = ${LWS_WITH_MBEDTLS} (mbedTLS replacement for OpenSSL)")
-message(" LWS_WITHOUT_BUILTIN_SHA1 = ${LWS_WITHOUT_BUILTIN_SHA1}")
-message(" LWS_WITHOUT_BUILTIN_GETIFADDRS = ${LWS_WITHOUT_BUILTIN_GETIFADDRS}")
-message(" LWS_WITHOUT_CLIENT = ${LWS_WITHOUT_CLIENT}")
-message(" LWS_WITHOUT_SERVER = ${LWS_WITHOUT_SERVER}")
-message(" LWS_LINK_TESTAPPS_DYNAMIC = ${LWS_LINK_TESTAPPS_DYNAMIC}")
-message(" LWS_WITHOUT_TESTAPPS = ${LWS_WITHOUT_TESTAPPS}")
-message(" LWS_WITHOUT_TEST_SERVER = ${LWS_WITHOUT_TEST_SERVER}")
-message(" LWS_WITHOUT_TEST_SERVER_EXTPOLL = ${LWS_WITHOUT_TEST_SERVER_EXTPOLL}")
-message(" LWS_WITHOUT_TEST_PING = ${LWS_WITHOUT_TEST_PING}")
-message(" LWS_WITHOUT_TEST_CLIENT = ${LWS_WITHOUT_TEST_CLIENT}")
-message(" LWS_WITHOUT_EXTENSIONS = ${LWS_WITHOUT_EXTENSIONS}")
-message(" LWS_WITH_LATENCY = ${LWS_WITH_LATENCY}")
-message(" LWS_WITHOUT_DAEMONIZE = ${LWS_WITHOUT_DAEMONIZE}")
-message(" LWS_WITH_LIBEV = ${LWS_WITH_LIBEV}")
-message(" LWS_WITH_LIBUV = ${LWS_WITH_LIBUV}")
-message(" LWS_WITH_LIBEVENT = ${LWS_WITH_LIBEVENT}")
-message(" LWS_IPV6 = ${LWS_IPV6}")
-message(" LWS_UNIX_SOCK = ${LWS_UNIX_SOCK}")
-message(" LWS_WITH_HTTP2 = ${LWS_WITH_HTTP2}")
-message(" LWS_SSL_SERVER_WITH_ECDH_CERT = ${LWS_SSL_SERVER_WITH_ECDH_CERT}")
-message(" LWS_MAX_SMP = ${LWS_MAX_SMP}")
-message(" LWS_HAVE_PTHREAD_H = ${LWS_HAVE_PTHREAD_H}")
-message(" LWS_WITH_CGI = ${LWS_WITH_CGI}")
-message(" LWS_HAVE_OPENSSL_ECDH_H = ${LWS_HAVE_OPENSSL_ECDH_H}")
-message(" LWS_HAVE_SSL_CTX_set1_param = ${LWS_HAVE_SSL_CTX_set1_param}")
-message(" LWS_HAVE_RSA_SET0_KEY = ${LWS_HAVE_RSA_SET0_KEY}")
-message(" LWS_WITH_HTTP_PROXY = ${LWS_WITH_HTTP_PROXY}")
+message(" LWS3_WITH_MBEDTLS = ${LWS_WITH_MBEDTLS} (mbedTLS replacement for OpenSSL)")
+message(" LWS3_WITHOUT_BUILTIN_SHA1 = ${LWS_WITHOUT_BUILTIN_SHA1}")
+message(" LWS3_WITHOUT_BUILTIN_GETIFADDRS = ${LWS_WITHOUT_BUILTIN_GETIFADDRS}")
+message(" LWS3_WITHOUT_CLIENT = ${LWS_WITHOUT_CLIENT}")
+message(" LWS3_WITHOUT_SERVER = ${LWS_WITHOUT_SERVER}")
+message(" LWS3_LINK_TESTAPPS_DYNAMIC = ${LWS_LINK_TESTAPPS_DYNAMIC}")
+message(" LWS3_WITHOUT_TESTAPPS = ${LWS_WITHOUT_TESTAPPS}")
+message(" LWS3_WITHOUT_TEST_SERVER = ${LWS_WITHOUT_TEST_SERVER}")
+message(" LWS3_WITHOUT_TEST_SERVER_EXTPOLL = ${LWS_WITHOUT_TEST_SERVER_EXTPOLL}")
+message(" LWS3_WITHOUT_TEST_PING = ${LWS_WITHOUT_TEST_PING}")
+message(" LWS3_WITHOUT_TEST_CLIENT = ${LWS_WITHOUT_TEST_CLIENT}")
+message(" LWS3_WITHOUT_EXTENSIONS = ${LWS_WITHOUT_EXTENSIONS}")
+message(" LWS3_WITH_LATENCY = ${LWS_WITH_LATENCY}")
+message(" LWS3_WITHOUT_DAEMONIZE = ${LWS_WITHOUT_DAEMONIZE}")
+message(" LWS3_WITH_LIBEV = ${LWS_WITH_LIBEV}")
+message(" LWS3_WITH_LIBUV = ${LWS_WITH_LIBUV}")
+message(" LWS3_WITH_LIBEVENT = ${LWS_WITH_LIBEVENT}")
+message(" LWS3_IPV6 = ${LWS_IPV6}")
+message(" LWS3_UNIX_SOCK = ${LWS_UNIX_SOCK}")
+message(" LWS3_WITH_HTTP2 = ${LWS_WITH_HTTP2}")
+message(" LWS3_SSL_SERVER_WITH_ECDH_CERT = ${LWS_SSL_SERVER_WITH_ECDH_CERT}")
+message(" LWS3_MAX_SMP = ${LWS_MAX_SMP}")
+message(" LWS3_HAVE_PTHREAD_H = ${LWS_HAVE_PTHREAD_H}")
+message(" LWS3_WITH_CGI = ${LWS_WITH_CGI}")
+message(" LWS3_HAVE_OPENSSL_ECDH_H = ${LWS_HAVE_OPENSSL_ECDH_H}")
+message(" LWS3_HAVE_SSL_CTX_set1_param = ${LWS_HAVE_SSL_CTX_set1_param}")
+message(" LWS3_HAVE_RSA_SET0_KEY = ${LWS_HAVE_RSA_SET0_KEY}")
+message(" LWS3_WITH_HTTP_PROXY = ${LWS_WITH_HTTP_PROXY}")
 message(" LIBHUBBUB_LIBRARIES = ${LIBHUBBUB_LIBRARIES}")
 message(" PLUGINS = ${PLUGINS_LIST}")
-message(" LWS_WITH_ACCESS_LOG = ${LWS_WITH_ACCESS_LOG}")
-message(" LWS_WITH_SERVER_STATUS = ${LWS_WITH_SERVER_STATUS}")
-message(" LWS_WITH_LEJP = ${LWS_WITH_LEJP}")
-message(" LWS_WITH_LEJP_CONF = ${LWS_WITH_LEJP_CONF}")
-message(" LWS_WITH_SMTP = ${LWS_WITH_SMTP}")
-message(" LWS_WITH_GENERIC_SESSIONS = ${LWS_WITH_GENERIC_SESSIONS}")
-message(" LWS_STATIC_PIC = ${LWS_STATIC_PIC}")
-message(" LWS_WITH_RANGES = ${LWS_WITH_RANGES}")
-message(" LWS_PLAT_OPTEE = ${LWS_PLAT_OPTEE}")
-message(" LWS_WITH_ESP32 = ${LWS_WITH_ESP32}")
-message(" LWS_WITH_ZIP_FOPS = ${LWS_WITH_ZIP_FOPS}")
-message(" LWS_AVOID_SIGPIPE_IGN = ${LWS_AVOID_SIGPIPE_IGN}")
-message(" LWS_WITH_STATS = ${LWS_WITH_STATS}")
-message(" LWS_WITH_SOCKS5 = ${LWS_WITH_SOCKS5}")
-message(" LWS_HAVE_SYS_CAPABILITY_H = ${LWS_HAVE_SYS_CAPABILITY_H}")
-message(" LWS_HAVE_LIBCAP = ${LWS_HAVE_LIBCAP}")
-message(" LWS_WITH_PEER_LIMITS = ${LWS_WITH_PEER_LIMITS}")
-message(" LWS_HAVE_ATOLL = ${LWS_HAVE_ATOLL}")
-message(" LWS_HAVE__ATOI64 = ${LWS_HAVE__ATOI64}")
-message(" LWS_HAVE_STAT32I64 = ${LWS_HAVE_STAT32I64}")
-message(" LWS_HAS_INTPTR_T = ${LWS_HAS_INTPTR_T}")
-message(" LWS_WITH_EXPORT_LWSTARGETS = ${LWS_WITH_EXPORT_LWSTARGETS}")
-message(" LWS_WITH_ABSTRACT = ${LWS_WITH_ABSTRACT}")
+message(" LWS3_WITH_ACCESS_LOG = ${LWS_WITH_ACCESS_LOG}")
+message(" LWS3_WITH_SERVER_STATUS = ${LWS_WITH_SERVER_STATUS}")
+message(" LWS3_WITH_LEJP = ${LWS_WITH_LEJP}")
+message(" LWS3_WITH_LEJP_CONF = ${LWS_WITH_LEJP_CONF}")
+message(" LWS3_WITH_SMTP = ${LWS_WITH_SMTP}")
+message(" LWS3_WITH_GENERIC_SESSIONS = ${LWS_WITH_GENERIC_SESSIONS}")
+message(" LWS3_STATIC_PIC = ${LWS_STATIC_PIC}")
+message(" LWS3_WITH_RANGES = ${LWS_WITH_RANGES}")
+message(" LWS3_PLAT_OPTEE = ${LWS_PLAT_OPTEE}")
+message(" LWS3_WITH_ESP32 = ${LWS_WITH_ESP32}")
+message(" LWS3_WITH_ZIP_FOPS = ${LWS_WITH_ZIP_FOPS}")
+message(" LWS3_AVOID_SIGPIPE_IGN = ${LWS_AVOID_SIGPIPE_IGN}")
+message(" LWS3_WITH_STATS = ${LWS_WITH_STATS}")
+message(" LWS3_WITH_SOCKS5 = ${LWS_WITH_SOCKS5}")
+message(" LWS3_HAVE_SYS_CAPABILITY_H = ${LWS_HAVE_SYS_CAPABILITY_H}")
+message(" LWS3_HAVE_LIBCAP = ${LWS_HAVE_LIBCAP}")
+message(" LWS3_WITH_PEER_LIMITS = ${LWS_WITH_PEER_LIMITS}")
+message(" LWS3_HAVE_ATOLL = ${LWS_HAVE_ATOLL}")
+message(" LWS3_HAVE__ATOI64 = ${LWS_HAVE__ATOI64}")
+message(" LWS3_HAVE_STAT32I64 = ${LWS_HAVE_STAT32I64}")
+message(" LWS3_HAS_INTPTR_T = ${LWS_HAS_INTPTR_T}")
+message(" LWS3_WITH_EXPORT_LWSTARGETS = ${LWS_WITH_EXPORT_LWSTARGETS}")
+message(" LWS3_WITH_ABSTRACT = ${LWS_WITH_ABSTRACT}")
 
 message("---------------------------------------------------------------------")
 
 # These will be available to parent projects including libwebsockets using add_subdirectory()
-set(LIBWEBSOCKETS_LIBRARIES ${LWS_LIBRARIES} CACHE STRING "Libwebsocket libraries")
+set(LIBWEBSOCKETS_LIBRARIES ${LWS_LIBRARIES} CACHE STRING "Libwebsocket3 libraries")
 if (LWS_WITH_STATIC)
-	set(LIBWEBSOCKETS_LIBRARIES_STATIC websockets CACHE STRING "Libwebsocket static library")
+	set(LIBWEBSOCKETS_LIBRARIES_STATIC websockets3 CACHE STRING "Libwebsocket3 static library")
 endif()
 if (LWS_WITH_SHARED)
-	set(LIBWEBSOCKETS_LIBRARIES_SHARED websockets_shared CACHE STRING "Libwebsocket shared library")
+	set(LIBWEBSOCKETS_LIBRARIES_SHARED websockets3_shared CACHE STRING "Libwebsocket3 shared library")
 endif()
 
 if (LWS_WITH_MINIMAL_EXAMPLES)
