@@ -21,8 +21,8 @@
 
 /** @file */
 
-#ifndef LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
-#define LIBWEBSOCKET_H_3060898B846849FF9F88F5DB59B5950C
+#ifndef LIBWEBSOCKET3_H_3060898B846849FF9F88F5DB59B5950C
+#define LIBWEBSOCKET3_H_3060898B846849FF9F88F5DB59B5950C
 
 #ifdef __cplusplus
 #include <cstddef>
@@ -36,7 +36,7 @@ extern "C" {
 #include <string.h>
 #include <stdlib.h>
 
-#include "lws_config.h"
+#include "lws3_config.h"
 
 /* place for one-shot opaque forward references */
 
