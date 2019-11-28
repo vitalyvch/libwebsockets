@@ -1538,13 +1538,13 @@ if (LWS_WITH_STATIC)
 	endif()
 	add_custom_command(
 		      TARGET websockets3
-		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets.h
+		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets3.h
 		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3.h
 	)
 
 	add_custom_command(
 		      TARGET websockets3
-		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets/
+		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets3/
 									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3
 	)
 
@@ -1585,13 +1585,13 @@ if (LWS_WITH_SHARED)
 
 	add_custom_command(
 		      TARGET websockets3_shared
-		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets.h
+		      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets3.h
 		     					 ${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3.h
 	)
 
 	add_custom_command(
 		      TARGET websockets3
-		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets
+		      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/include/libwebsockets3
 									${CMAKE_CURRENT_BINARY_DIR}/include/libwebsockets3
 	)
 
