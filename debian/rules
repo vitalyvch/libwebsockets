@@ -21,13 +21,20 @@ arch?=		$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DCMAKE_LIBRARY_ARCHITECTURE=${arch} \
-	    -DLIB_SUFFIX=/${arch} -DLWS_WITHOUT_DAEMONIZE=OFF \
-	    -DLWS_WITH_LIBEV=ON -DLWS_WITH_LIBUV=ON \
-	    -DLWS_UNIX_SOCK=ON
+	dh_auto_configure -- \
+		-DCMAKE_LIBRARY_ARCHITECTURE=${arch} \
+	    -DLIB_SUFFIX=/${arch} \
+	    -DLWS_WITH_LIBEV=ON \
+		-DLWS_WITH_LIBUV=ON \
+	    -DLWS_UNIX_SOCK=ON \
+		-DLWS_WITHOUT_DAEMONIZE=OFF \
+		-DLWS_WITHOUT_EXTENSIONS=OFF \
+		-DLWS_WITH_STRUCT_JSON=ON \
+		-DLWS_WITH_GENERIC_SESSIONS=ON \
+		-DLWS_WITH_PLUGINS=ON
 
 override_dh_install-arch:
-	$(RM) $(CURDIR)/debian/tmp/usr/lib/${arch}/pkgconfig/libwebsockets_static.pc
+	$(RM) $(CURDIR)/debian/tmp/usr/lib/${arch}/pkgconfig/libwebsockets3_static.pc
 	dh_install -a
 
 .PHONY: override_dh_auto_configure override_dh_install-arch
