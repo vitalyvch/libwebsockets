@@ -1520,14 +1520,15 @@ source_group("Resources"        FILES ${RESOURCES})
 set(LWS_LIBRARIES)
 
 if (LWS_WITH_STATIC)
-    if (LWS_STATIC_PIC)
-        set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-    endif()
 	add_library(websockets3 STATIC
 				${HDR_PRIVATE}
 				${HDR_PUBLIC}
 				${SOURCES})
 	list(APPEND LWS_LIBRARIES websockets3)
+
+    if (LWS_STATIC_PIC)
+		set_property(TARGET websockets3 PROPERTY POSITION_INDEPENDENT_CODE ON)
+    endif()
 
 	if (WIN32)
 		# Windows uses the same .lib ending for static libraries and shared
