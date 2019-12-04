@@ -1,1 +1,1 @@
-plugins/ssh-base/include/lws3-plugin-ssh.h
+lws3-plugin-ssh.h
