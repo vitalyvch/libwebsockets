@@ -1,5 +1,5 @@
-Name:           libwebsockets
-Version:        3.0.1
+Name:           libwebsockets3
+Version:        3.2.0
 Release:        2%{?dist}
 Summary:        A lightweight C library for Websockets
 
@@ -41,7 +41,15 @@ This package contains the header files needed for developing
 %build
 mkdir -p build
 cd build
+export CFLAGS="%{optflags} ${CFLAGS} -fno-strict-aliasing -Wno-error=unused-result"
 %cmake \
+    -D LWS_WITH_LIBEV=ON \
+    -D LWS_UNIX_SOCK=ON \
+    -D LWS_WITHOUT_DAEMONIZE=OFF \
+    -D LWS_WITHOUT_EXTENSIONS=OFF \
+    -D LWS_WITH_STRUCT_JSON=ON \
+    -D LWS_WITH_GENERIC_SESSIONS=ON \
+    -D LWS_WITH_PLUGINS=ON \
     -D LWS_LINK_TESTAPPS_DYNAMIC=ON \
     -D LWS_WITH_LIBUV=ON \
     -D LWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
@@ -64,9 +72,6 @@ cd build
 cd build
 %make_install
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
-find %{buildroot} -name '*.a' -exec rm -f {} ';'
-find %{buildroot} -name '*.cmake' -exec rm -f {} ';'
-find %{buildroot} -name '*_static.pc' -exec rm -f {} ';'
 
 %post -p /sbin/ldconfig
 
@@ -76,13 +81,21 @@ find %{buildroot} -name '*_static.pc' -exec rm -f {} ';'
 %doc README.md changelog
 %license LICENSE
 %{_libdir}/%{name}.so.*
+#%{_libdir}/libprotocol_*.so
 
 %files devel
 %doc READMEs/README.coding.md READMEs/ changelog
 %license LICENSE
 %{_includedir}/*.h
+%{_includedir}/%{name}/*.h
+%{_includedir}/%{name}/*/*.h
+%{_includedir}/%{name}/*/*/*.h
 %{_libdir}/%{name}.so
+#%{_libdir}/%{name}.a
+%{_libdir}/cmake/%{name}/*.cmake
 %{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/pkgconfig/%{name}_static.pc
+%{_datarootdir}/libwebsockets3-test-server/*
 
 %changelog
 * Mon Jan  7 2019 Peter Robinson <pbrobinson@fedoraproject.org> 3.0.1-2
